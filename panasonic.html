@@ -1,16 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Include SEO component -->
-  <div include-html="components/seo.html"></div>
-
-  <!-- Include Analytics / Google Tag component -->
-  <div include-html="components/analytics.html"></div>
-
+  <!-- SEO -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Panasonic Products | Pixitech</title>
+
+  <title>Panasonic Products | PhoneHub Pakistan</title>
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -19,7 +14,7 @@
       theme: {
         extend: {
           colors: {
-            primary: '#ff0000', /* Global red color */
+            primary: '#ff0000',
           },
           backgroundColor: {
             dark: '#000000'
@@ -32,48 +27,60 @@
     }
   </script>
 
-  <!-- Optional global styles -->
+  <!-- Global CSS -->
   <link rel="stylesheet" href="/assets/css/global.css">
 </head>
+
 <body class="bg-dark text-light">
 
-  <!-- Header component -->
-  <div include-html="components/header.html"></div>
+  <!-- Inject SEO Component -->
+  <div include-html="/components/seo.html"></div>
 
-  <!-- Panasonic Hero component -->
-  <div include-html="components/pages/panasonic/hero.html"></div>
+  <!-- Analytics -->
+  <div include-html="/components/analytics.html"></div>
 
-  <!-- Panasonic Products component -->
-  <div include-html="components/pages/panasonic/products.html"></div>
+  <!-- Header -->
+  <div include-html="/components/header.html"></div>
 
-  <!-- Contact component -->
-  <div include-html="components/pages/panasonic/contact.html"></div>
+  <!-- Panasonic Hero -->
+  <div include-html="/components/pages/panasonic/hero.html"></div>
 
-  <!-- Footer component -->
-  <div include-html="components/footer.html"></div>
+  <!-- Panasonic Products -->
+  <div include-html="/components/pages/panasonic/products.html"></div>
 
-  <!-- Script to include HTML components -->
+  <!-- Contact -->
+  <div include-html="/components/pages/panasonic/contact.html"></div>
+
+  <!-- Footer -->
+  <div include-html="/components/footer.html"></div>
+
+  <!-- Include Components Script -->
   <script>
     async function includeHTML() {
       const elements = document.querySelectorAll('[include-html]');
+
       for (let el of elements) {
         const file = el.getAttribute('include-html');
-        if (file) {
-          try {
-            const response = await fetch(file);
-            if (response.ok) {
-              el.innerHTML = await response.text();
-              el.removeAttribute('include-html');
-            } else {
-              el.innerHTML = "Page not found.";
-            }
-          } catch (err) {
-            el.innerHTML = "Error loading page.";
+
+        try {
+          const response = await fetch(file);
+
+          if (response.ok) {
+            const html = await response.text();
+            el.innerHTML = html;
+          } else {
+            el.innerHTML = "<p class='text-red-500'>Component not found.</p>";
           }
+        } catch (error) {
+          el.innerHTML = "<p class='text-red-500'>Error loading component.</p>";
         }
+
+        el.removeAttribute('include-html');
       }
     }
+
     includeHTML();
   </script>
+
 </body>
 </html>
