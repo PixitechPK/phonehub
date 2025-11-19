@@ -1,0 +1,107 @@
+/* global.css */
+
+/* --------------------------
+   Base Theme Colors
+--------------------------- */
+:root {
+  --primary: #e50000; /* Red */
+  --dark: #000000;    /* Black */
+  --light: #ffffff;   /* White */
+}
+
+/* Global Defaults */
+body {
+  background-color: var(--dark);
+  color: var(--light);
+  font-family: system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* --------------------------
+   Tailwind Utility Enhancements
+--------------------------- */
+
+/* Override Tailwind's text-primary convenience class */
+.text-primary {
+  color: var(--primary) !important;
+}
+
+.bg-primary {
+  background-color: var(--primary) !important;
+}
+
+/* Global link styles */
+a {
+  transition: 0.2s ease;
+}
+
+/* Buttons */
+.btn {
+  background-color: var(--primary);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  display: inline-block;
+  transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #c40000;
+}
+
+/* Section Spacing */
+section {
+  scroll-margin-top: 80px;
+}
+
+/* Utility container if needed */
+.container {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Footer border line fix */
+footer {
+  border-color: #1a1a1a;
+}
+
+/* Disable highlight on mobile taps */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Image styling helper */
+.img-rounded {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* Shadows for dark theme */
+.shadow-dark {
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.1);
+}
+
+/* Moving brands adjustment */
+.animate-scroll span {
+  display: inline-block;
+}
+
+/* Scrollbar style */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111;
+}
