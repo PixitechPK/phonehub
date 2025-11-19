@@ -1,16 +1,44 @@
-<footer>
-  <div class="container footer-disclaimer">
-    Disclaimer: All brand names and logos belong to respective companies.
-  </div>
+<!-- components/footer.html -->
 
-  <div class="container footer-bottom">
-    <div class="footer-menu">
-      <a href="#">Home</a>
-      <a href="#">Products</a>
-      <a href="#">Support</a>
-      <a href="#">Contact</a>
+<!-- Disclaimer Notification -->
+<div class="bg-red-700 text-white text-center py-3 px-4 text-sm">
+  Disclaimer: All product names, logos, and brands are property of their respective owners.
+</div>
+
+<!-- Main Footer -->
+<footer class="bg-black text-white pt-12 pb-8 border-t border-neutral-800">
+
+  <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center md:items-start">
+
+    <!-- Left: Logo -->
+    <div class="mb-8 md:mb-0">
+      <img 
+        src="https://pixitech.net/storage/pages/dWtbXR2SUHUcUup3hndwj4kWCRLl6Wsu83fnArat.png"
+        alt="Logo" 
+        class="max-w-[120px]"
+      >
     </div>
 
-    <div class="footer-logo">UNIDEN PAKISTAN</div>
+    <!-- Right: Menu -->
+    <nav class="flex flex-col sm:flex-row gap-4 text-center md:text-right text-gray-300">
+      <a href="#home" class="hover:text-primary transition">Home</a>
+      <a href="#products" class="hover:text-primary transition">Products</a>
+      <a href="#about" class="hover:text-primary transition">About</a>
+      <a href="#contact" class="hover:text-primary transition">Contact</a>
+    </nav>
+
   </div>
+
+  <!-- Bottom Bar -->
+  <div class="text-center text-gray-500 text-sm mt-10 pt-6 border-t border-neutral-800">
+    © <span id="year"></span> All Rights Reserved.  
+    Information provided by 
+    <a href="https://pixitech.net/" class="text-primary hover:underline">Pixitech</a>.
+  </div>
+
 </footer>
+
+<!-- Auto Year Script -->
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
