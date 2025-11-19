@@ -1,0 +1,40 @@
+.main-header {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #eee;
+}
+
+.header-container {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo img {
+  height: 48px;
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  gap: 28px;
+}
+
+.nav a {
+  text-decoration: none;
+  font-size: 16px;
+  color: #333;
+  transition: 0.2s;
+}
+
+.nav a:hover {
+  color: #ff6600;
+}
+
+.header-actions .cart-icon img {
+  height: 26px;
+  cursor: pointer;
+}
