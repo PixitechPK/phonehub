@@ -1,5 +1,3 @@
-<!-- components/header.html -->
-
 <header class="bg-black text-white shadow-md">
   <div class="container mx-auto flex items-center justify-between py-4 px-6">
 
@@ -10,10 +8,33 @@
     </div>
 
     <!-- Navigation Menu -->
-    <nav class="flex space-x-8 font-semibold text-white">
-      <a href="#home" class="hover:text-primary transition-colors">Home</a>
-      <a href="#products" class="hover:text-primary transition-colors">Products</a>
+    <nav class="flex space-x-8 font-semibold text-white relative">
+      
+      <!-- Home -->
+      <div class="group relative">
+        <a href="#home" class="hover:text-primary transition-colors">Home</a>
+        <!-- Example submenu (hidden by default) -->
+        <div class="absolute left-0 mt-2 w-40 bg-black text-white shadow-lg rounded-md opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all">
+          <a href="#home-section1" class="block px-4 py-2 hover:bg-gray-800">Home Section 1</a>
+          <a href="#home-section2" class="block px-4 py-2 hover:bg-gray-800">Home Section 2</a>
+          <a href="#home-section3" class="block px-4 py-2 hover:bg-gray-800">Home Section 3</a>
+        </div>
+      </div>
+
+      <!-- Products -->
+      <div class="group relative">
+        <a href="#products" class="hover:text-primary transition-colors">Products</a>
+        <div class="absolute left-0 mt-2 w-40 bg-black text-white shadow-lg rounded-md opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all">
+          <a href="#panasonic" class="block px-4 py-2 hover:bg-gray-800">Panasonic</a>
+          <a href="#uniden" class="block px-4 py-2 hover:bg-gray-800">Uniden</a>
+          <a href="#alcatel" class="block px-4 py-2 hover:bg-gray-800">Alcatel</a>
+        </div>
+      </div>
+
+      <!-- About -->
       <a href="#about" class="hover:text-primary transition-colors">About</a>
+
+      <!-- Contact -->
       <a href="#contact" class="hover:text-primary transition-colors">Contact</a>
     </nav>
 
