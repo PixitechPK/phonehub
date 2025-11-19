@@ -1,60 +1,61 @@
-<div class="products-section">
-  <h2 class="section-title">Our Products</h2>
+<!-- components/products.html -->
 
-  <div id="productGrid" class="product-grid">
-    <!-- ROW 1 -->
-    <div class="product-item">Product 1</div>
-    <div class="product-item">Product 2</div>
-    <div class="product-item">Product 3</div>
+<section class="bg-black text-white py-16" id="products">
+  <div class="container mx-auto px-6">
 
-    <!-- ROW 2 -->
-    <div class="product-item">Product 4</div>
-    <div class="product-item">Product 5</div>
-    <div class="product-item">Product 6</div>
+    <!-- Section Title -->
+    <div class="text-center mb-12">
+      <p class="text-primary uppercase font-semibold tracking-wide">Our Products</p>
+      <h2 class="text-4xl font-bold mt-2">Latest Catalog</h2>
+      <p class="text-gray-400 mt-4 max-w-2xl mx-auto">
+        Browse premium telephones and communication devices from trusted brands.
+      </p>
+    </div>
 
-    <!-- ROW 3 -->
-    <div class="product-item">Product 7</div>
-    <div class="product-item">Product 8</div>
-    <div class="product-item">Product 9</div>
+    <!-- Products Grid -->
+    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
 
-    <!-- MORE ROWS (HIDDEN BY DEFAULT) -->
-    <div class="product-item hidden">Product 10</div>
-    <div class="product-item hidden">Product 11</div>
-    <div class="product-item hidden">Product 12</div>
+      <!-- Product Item (repeat these blocks) -->
+      <!-- FIRST 3 ROWS ARE VISIBLE -->
+      <!-- Rest will have class "hidden-product" -->
 
-    <div class="product-item hidden">Product 13</div>
-    <div class="product-item hidden">Product 14</div>
-    <div class="product-item hidden">Product 15</div>
+      <!-- Example visible product -->
+      <div class="product-card">
+        <img src="https://sadarexpress.com/wp-content/uploads/2025/06/download-5.jpeg"
+             class="w-full h-40 object-cover rounded-lg mb-4">
+        <h3 class="text-lg font-semibold">Panasonic KX-TS934MX Corded Phone</h3>
+        <p class="text-gray-400 text-sm mt-2">Ask for price – Panasonic</p>
+        <a href="#"
+          class="mt-4 inline-block bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-600 transition">
+          Download PDF
+        </a>
+      </div>
 
-    <div class="product-item hidden">Product 16</div>
-    <div class="product-item hidden">Product 17</div>
-    <div class="product-item hidden">Product 18</div>
+      <!-- Duplicate items below as you have -->
+      <!-- Add class="hidden-product" to items AFTER the first 15 products -->
+
+      <div class="product-card hidden-product">
+        <img src="https://sadarexpress.com/wp-content/uploads/2025/06/download-5.jpeg"
+             class="w-full h-40 object-cover rounded-lg mb-4">
+        <h3 class="text-lg font-semibold">Panasonic KX-TS934MX Corded Phone</h3>
+        <p class="text-gray-400 text-sm mt-2">Ask for price – Panasonic</p>
+        <a href="#"
+          class="mt-4 inline-block bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-600 transition">
+          Download PDF
+        </a>
+      </div>
+
+      <!-- KEEP DUPLICATING AS MANY AS NEEDED -->
+
+    </div>
+
+    <!-- Load More Button -->
+    <div class="text-center mt-10">
+      <button id="loadMoreBtn"
+        class="bg-primary hover:bg-red-600 transition text-white px-6 py-3 rounded-full text-lg">
+        Load More
+      </button>
+    </div>
+
   </div>
-
-  <div class="load-more-wrapper">
-    <button id="loadMoreBtn" class="load-more-btn">Load More</button>
-  </div>
-</div>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    let currentIndex = 9; // first 3 rows (3x3 = 9 products)
-    const items = document.querySelectorAll("#productGrid .product-item");
-    const btn = document.getElementById("loadMoreBtn");
-
-    btn.addEventListener("click", function () {
-      let nextIndex = currentIndex + 3;
-
-      for (let i = currentIndex; i < nextIndex && i < items.length; i++) {
-        items[i].classList.remove("hidden");
-        items[i].classList.add("fadeIn");
-      }
-
-      currentIndex = nextIndex;
-
-      if (currentIndex >= items.length) {
-        btn.style.display = "none"; // hide button when done
-      }
-    });
-  });
-</script>
+</sec
