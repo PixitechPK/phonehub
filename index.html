@@ -1,46 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Product Showcase | Pixitech</title>
-  <link rel="stylesheet" href="styles/style.css" />
-</head>
-<body>
+  <!-- Include SEO component -->
+  <div include-html="components/seo.html"></div>
 
-  <!-- Include Header Component -->
-  <div id="header-container"></div>
+  <!-- Include Analytics / Google Tag component -->
+  <div include-html="components/analytics.html"></div>
 
-  <!-- Include Intro Component -->
-  <div id="intro-container"></div>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Home Page</title>
 
-  <!-- Include Product Catalog Component -->
-  <div id="product-container"></div>
-
-  <!-- Include Contact Us Component -->
-  <div id="contact-us-container"></div>
-
-  <!-- Include Brands Component -->
-  <div id="brands-container"></div>
-
-  <!-- Include Footer Component -->
-  <div id="footer-container"></div>
-
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // Load all components dynamically
-    document.getElementById('header-container').innerHTML = includeHTML('components/header.html');
-    document.getElementById('intro-container').innerHTML = includeHTML('components/intro.html');
-    document.getElementById('product-container').innerHTML = includeHTML('components/product-catalog.html');
-    document.getElementById('contact-us-container').innerHTML = includeHTML('components/contact-us.html');
-    document.getElementById('brands-container').innerHTML = includeHTML('components/brands.html');
-    document.getElementById('footer-container').innerHTML = includeHTML('components/footer.html');
-
-    function includeHTML(file) {
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", file, false);
-      xhr.send();
-      return xhr.responseText;
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#ff0000', /* Global red color */
+          },
+          backgroundColor: {
+            dark: '#000000'
+          },
+          textColor: {
+            light: '#ffffff'
+          }
+        }
+      }
     }
+  </script>
+
+  <!-- Optional global styles -->
+  <link rel="stylesheet" href="assets/css/global.css">
+</head>
+<body class="bg-dark text-light">
+
+  <!-- Header component -->
+  <div include-html="components/header.html"></div>
+
+  <!-- Hero component -->
+  <div include-html="components/hero.html"></div>
+
+  <!-- Products component -->
+  <div include-html="components/products.html"></div>
+
+  <!-- Contact component -->
+  <div include-html="components/contact.html"></div>
+
+  <!-- Footer component -->
+  <div include-html="components/footer.html"></div>
+
+  <!-- Script to include HTML components -->
+  <script>
+    async function includeHTML() {
+      const elements = document.querySelectorAll('[include-html]');
+      for (let el of elements) {
+        const file = el.getAttribute('include-html');
+        if (file) {
+          try {
+            const response = await fetch(file);
+            if (response.ok) {
+              el.innerHTML = await response.text();
+              el.removeAttribute('include-html');
+            } else {
+              el.innerHTML = "Page not found.";
+            }
+          } catch (err) {
+            el.innerHTML = "Error loading page.";
+          }
+        }
+      }
+    }
+    includeHTML();
   </script>
 </body>
 </html>
