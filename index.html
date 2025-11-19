@@ -1,124 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Include SEO component -->
+  <!-- Include SEO -->
   <div include-html="components/seo.html"></div>
 
-  <!-- Include Analytics / Google Tag component -->
+  <!-- Include Analytics -->
   <div include-html="components/analytics.html"></div>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <title>Home Page</title>
 
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            primary: '#ff0000', /* Global red color */
-          },
-          backgroundColor: {
-            dark: '#000000'
-          },
-          textColor: {
-            light: '#ffffff'
+            primary: '#ff0000',
           }
         }
       }
     }
   </script>
 
-  <!-- Optional global styles -->
   <link rel="stylesheet" href="assets/css/global.css">
 </head>
-<body class="bg-dark text-light">
 
-  <!-- Header component -->
+<body class="bg-black text-white">
+
+  <!-- Components -->
   <div include-html="components/header.html"></div>
-
-  <!-- Hero component -->
   <div include-html="components/hero.html"></div>
-
-  <!-- Brands component -->
   <div include-html="components/brands.html"></div>
-
-  <!-- Products component -->
-  <div include-html="components/products.html"></div>
-
-  <!-- Contact component -->
+  <div include-html="components/products.html" id="productsComponent"></div>
   <div include-html="components/contact.html"></div>
-
-  <!-- Footer component -->
   <div include-html="components/footer.html"></div>
 
-  <!-- Script to include HTML components -->
+
+  <!-- Component Loader + Load More Logic -->
   <script>
     async function includeHTML() {
-      const elements = document.querySelectorAll('[include-html]');
+      const elements = document.querySelectorAll("[include-html]");
       for (let el of elements) {
-        const file = el.getAttribute('include-html');
-        if (file) {
-          try {
-            const response = await fetch(file);
-            if (response.ok) {
-              el.innerHTML = await response.text();
-              el.removeAttribute('include-html');
+        const file = el.getAttribute("include-html");
+        if (!file) continue;
 
-              // Initialize Load More only after products.html is loaded
-              if (file === "components/products.html") {
-                initLoadMore();
-              }
+        const response = await fetch(file);
+        const text = await response.text();
+        el.innerHTML = text;
+        el.removeAttribute("include-html");
 
-            } else {
-              el.innerHTML = "Page not found.";
-            }
-          } catch (err) {
-            el.innerHTML = "Error loading page.";
-          }
+        // 👇 When products.html is loaded, initialize Load More
+        if (file.includes("products.html")) {
+          requestAnimationFrame(() => {
+            initLoadMore();   // WAIT until DOM updates
+          });
         }
       }
     }
 
-    // Enhanced Load More function: show 3 at a time with fade-in animation
     function initLoadMore() {
-      const loadMoreBtn = document.getElementById("loadMore");
-      if (!loadMoreBtn) return;
+      const items = document.querySelectorAll(".hidden-product");
+      const btn = document.getElementById("loadMore");
 
-      const hiddenItems = Array.from(document.querySelectorAll(".hidden-product"));
-      let itemsToShow = 3;
-      let currentIndex = 0;
+      if (!btn || !items.length) return;
 
-      // Initially hide all hidden products
-      hiddenItems.forEach(item => {
-        item.style.display = "none";
-        item.classList.add("opacity-0", "transition-opacity", "duration-700");
-      });
+      let current = 0;
+      const step = 3;
 
-      loadMoreBtn.addEventListener("click", () => {
-        const nextItems = hiddenItems.slice(currentIndex, currentIndex + itemsToShow);
-        nextItems.forEach(item => {
-          item.style.display = "block";
-          // Trigger fade-in
-          setTimeout(() => item.classList.remove("opacity-0"), 50);
+      // Hide initially
+      items.forEach(i => (i.style.display = "none"));
+
+      btn.addEventListener("click", () => {
+        const slice = Array.from(items).slice(current, current + step);
+        slice.forEach(i => {
+          i.style.display = "block";
+          i.classList.add("opacity-0", "transition", "duration-500");
+          setTimeout(() => i.classList.remove("opacity-0"), 50);
         });
-        currentIndex += itemsToShow;
+        current += step;
 
-        // Hide button if no more hidden items
-        if (currentIndex >= hiddenItems.length) {
-          loadMoreBtn.style.display = "none";
+        if (current >= items.length) {
+          btn.style.display = "none";
         }
       });
     }
 
     includeHTML();
   </script>
-
-  <!-- Global JS file (optional for other scripts) -->
-  <script src="/assets/js/global.js"></script>
 
 </body>
 </html>
