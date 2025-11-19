@@ -3,30 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Uniden Pakistan</title>
-
-  <link rel="stylesheet" href="style.css" />
+  <title>Product Showcase | Pixitech</title>
+  <link rel="stylesheet" href="styles/style.css" />
 </head>
-
 <body>
 
-  <div id="header"></div>
-  <div id="hero"></div>
-  <div id="products"></div>
-  <div id="brands"></div>
-  <div id="contact"></div>
-  <div id="footer"></div>
+  <!-- Include Header Component -->
+  <div id="header-container"></div>
+
+  <!-- Include Intro Component -->
+  <div id="intro-container"></div>
+
+  <!-- Include Product Catalog Component -->
+  <div id="product-container"></div>
+
+  <!-- Include Contact Us Component -->
+  <div id="contact-us-container"></div>
+
+  <!-- Include Brands Component -->
+  <div id="brands-container"></div>
+
+  <!-- Include Footer Component -->
+  <div id="footer-container"></div>
 
   <script>
-    // auto-load component blocks
-    const blocks = ["header","hero","products","brands","contact","footer"];
+    // Load all components dynamically
+    document.getElementById('header-container').innerHTML = includeHTML('components/header.html');
+    document.getElementById('intro-container').innerHTML = includeHTML('components/intro.html');
+    document.getElementById('product-container').innerHTML = includeHTML('components/product-catalog.html');
+    document.getElementById('contact-us-container').innerHTML = includeHTML('components/contact-us.html');
+    document.getElementById('brands-container').innerHTML = includeHTML('components/brands.html');
+    document.getElementById('footer-container').innerHTML = includeHTML('components/footer.html');
 
-    blocks.forEach(block => {
-      fetch(`components/${block}.html`)
-        .then(res => res.text())
-        .then(data => document.getElementById(block).innerHTML = data);
-    });
+    function includeHTML(file) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", file, false);
+      xhr.send();
+      return xhr.responseText;
+    }
   </script>
-
 </body>
 </html>
