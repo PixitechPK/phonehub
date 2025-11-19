@@ -43,7 +43,7 @@
   <!-- Hero component -->
   <div include-html="components/hero.html"></div>
 
-   <!-- Brands component -->
+  <!-- Brands component -->
   <div include-html="components/brands.html"></div>
 
   <!-- Products component -->
@@ -67,6 +67,12 @@
             if (response.ok) {
               el.innerHTML = await response.text();
               el.removeAttribute('include-html');
+
+              // Initialize Load More only after products.html is loaded
+              if (file === "components/products.html") {
+                initLoadMore();
+              }
+
             } else {
               el.innerHTML = "Page not found.";
             }
@@ -76,11 +82,43 @@
         }
       }
     }
+
+    // Enhanced Load More function: show 3 at a time with fade-in animation
+    function initLoadMore() {
+      const loadMoreBtn = document.getElementById("loadMore");
+      if (!loadMoreBtn) return;
+
+      const hiddenItems = Array.from(document.querySelectorAll(".hidden-product"));
+      let itemsToShow = 3;
+      let currentIndex = 0;
+
+      // Initially hide all hidden products
+      hiddenItems.forEach(item => {
+        item.style.display = "none";
+        item.classList.add("opacity-0", "transition-opacity", "duration-700");
+      });
+
+      loadMoreBtn.addEventListener("click", () => {
+        const nextItems = hiddenItems.slice(currentIndex, currentIndex + itemsToShow);
+        nextItems.forEach(item => {
+          item.style.display = "block";
+          // Trigger fade-in
+          setTimeout(() => item.classList.remove("opacity-0"), 50);
+        });
+        currentIndex += itemsToShow;
+
+        // Hide button if no more hidden items
+        if (currentIndex >= hiddenItems.length) {
+          loadMoreBtn.style.display = "none";
+        }
+      });
+    }
+
     includeHTML();
   </script>
+
+  <!-- Global JS file (optional for other scripts) -->
   <script src="/assets/js/global.js"></script>
 
 </body>
 </html>
-
-
