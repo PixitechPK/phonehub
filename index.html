@@ -1,40 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Uniden Telephones Pakistan | Official Store for Cordless Phones</title>
-  <meta name="description" content="Buy official Uniden telephones in Pakistan. Discover cordless, wireless, and digital Uniden phones with Japanese reliability and local support.">
-  <meta name="keywords" content="Uniden, Uniden Pakistan, Uniden telephones, cordless phones, wireless phones, digital phones, Uniden store, Uniden Pakistan official">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Uniden Pakistan</title>
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Global CSS -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body class="font-sans text-gray-800 bg-white">
 
-  <!-- Analytics -->
-  <div include-html="components/analytics.html"></div>
+<body>
 
-  <!-- Page Sections -->
-  <div include-html="components/header.html"></div>
-  <div include-html="components/hero.html"></div>
-  <div include-html="components/about.html"></div>
-  <div include-html="components/products.html"></div>
-  <div include-html="components/online-orders.html"></div>
-  <div include-html="components/brands.html"></div>
-  <div include-html="components/contact.html"></div>
-  <div include-html="components/footer.html"></div>
+  <div id="header"></div>
+  <div id="hero"></div>
+  <div id="products"></div>
+  <div id="brands"></div>
+  <div id="contact"></div>
+  <div id="footer"></div>
 
-  <!-- Include HTML Script -->
   <script>
-    document.querySelectorAll('[include-html]').forEach(el => {
-      fetch(el.getAttribute('include-html'))
+    // auto-load component blocks
+    const blocks = ["header","hero","products","brands","contact","footer"];
+
+    blocks.forEach(block => {
+      fetch(`components/${block}.html`)
         .then(res => res.text())
-        .then(data => el.innerHTML = data)
-        .catch(err => console.error('Include failed:', err));
+        .then(data => document.getElementById(block).innerHTML = data);
     });
   </script>
 
