@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panasonic Products | Pixitech</title>
 
-  <!-- Include SEO component if you have one -->
-  <div include-html="components/seo.html"></div>
-
   <!-- Global Tailwind + custom CSS -->
   <link href="path/to/global.css" rel="stylesheet">
+
+  <!-- SEO component -->
+  <div include-html="components/seo.html"></div>
 </head>
 <body class="bg-black text-white">
 
@@ -33,31 +33,31 @@
 
   <!-- Include your JS for load more, etc. -->
   <script src="path/to/global.js"></script>
-<script>
-function includeHTML() {
-  const elements = document.querySelectorAll('[include-html]');
-  elements.forEach(el => {
-    const file = el.getAttribute('include-html');
-    if (file) {
-      fetch(file)
-        .then(resp => {
-          if (!resp.ok) throw new Error('File not found');
-          return resp.text();
-        })
-        .then(data => {
-          el.innerHTML = data;
-          el.removeAttribute('include-html');
-          includeHTML(); // recursive to load nested includes
-        })
-        .catch(err => console.error(err));
-    }
-  });
-}
 
-document.addEventListener("DOMContentLoaded", includeHTML);
-</script>
+  <!-- Include HTML Loader Script -->
+  <script>
+  function includeHTML() {
+    const elements = document.querySelectorAll('[include-html]');
+    elements.forEach(el => {
+      const file = el.getAttribute('include-html');
+      if (file) {
+        fetch(file)
+          .then(resp => {
+            if (!resp.ok) throw new Error('File not found: ' + file);
+            return resp.text();
+          })
+          .then(data => {
+            el.innerHTML = data;
+            el.removeAttribute('include-html');
+            includeHTML(); // recursive to load nested includes
+          })
+          .catch(err => console.error(err));
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", includeHTML);
+  </script>
 
 </body>
-  
-  
 </html>
