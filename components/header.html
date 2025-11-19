@@ -1,13 +1,27 @@
-<header class="site-header">
-  <div class="container header-wrap">
-    <div class="logo">UNIDEN PAKISTAN</div>
+<!-- components/header.html -->
 
-    <nav class="main-menu">
-      <a href="#">Home</a>
-      <a href="#">Cordless Phones</a>
-      <a href="#">Corded Phones</a>
-      <a href="#">Support</a>
-      <a href="#">Contact</a>
+<header class="bg-black text-white shadow-md">
+  <div class="container mx-auto flex items-center justify-between py-4 px-6">
+
+    <!-- Logo -->
+    <div class="flex items-center">
+      <img src="https://pixitech.net/storage/pages/dWtbXR2SUHUcUup3hndwj4kWCRLl6Wsu83fnArat.png" 
+           alt="Pixitech Logo" class="max-w-[120px]">
+    </div>
+
+    <!-- Navigation Menu -->
+    <nav class="flex space-x-8 font-semibold text-white">
+      <a href="#home" class="hover:text-primary transition-colors">Home</a>
+      <a href="#products" class="hover:text-primary transition-colors">Products</a>
+      <a href="#about" class="hover:text-primary transition-colors">About</a>
+      <a href="#contact" class="hover:text-primary transition-colors">Contact</a>
     </nav>
+
+    <!-- Contact / WhatsApp -->
+    <div class="flex flex-col items-end text-right">
+      <span class="font-semibold text-white">+92 345 3799494</span>
+      <small class="text-gray-400 text-xs mt-1">Connect on WhatsApp</small>
+    </div>
+
   </div>
 </header>
