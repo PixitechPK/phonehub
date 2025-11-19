@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Include SEO component -->
+  <div include-html="components/seo.html"></div>
+
+  <!-- Include Analytics / Google Tag component -->
+  <div include-html="components/analytics.html"></div>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Alcatel Products | Pixitech</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#ff0000', /* Global red color */
+          },
+          backgroundColor: {
+            dark: '#000000'
+          },
+          textColor: {
+            light: '#ffffff'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Optional global styles -->
+  <link rel="stylesheet" href="/assets/css/global.css">
+</head>
+<body class="bg-dark text-light">
+
+  <!-- Header component -->
+  <div include-html="components/header.html"></div>
+
+  <!-- Alcatel Hero component -->
+  <div include-html="components/pages/alcatel/hero.html"></div>
+
+  <!-- Alcatel Products component -->
+  <div include-html="components/pages/alcatel/products.html"></div>
+
+  <!-- Contact component -->
+  <div include-html="components/pages/alcatel/contact.html"></div>
+
+  <!-- Footer component -->
+  <div include-html="components/footer.html"></div>
+
+  <!-- Script to include HTML components -->
+  <script>
+    async function includeHTML() {
+      const elements = document.querySelectorAll('[include-html]');
+      for (let el of elements) {
+        const file = el.getAttribute('include-html');
+        if (file) {
+          try {
+            const response = await fetch(file);
+            if (response.ok) {
+              el.innerHTML = await response.text();
+              el.removeAttribute('include-html');
+            } else {
+              el.innerHTML = "Page not found.";
+            }
+          } catch (err) {
+            el.innerHTML = "Error loading page.";
+          }
+        }
+      }
+    }
+    includeHTML();
+  </script>
+</body>
+</html>
