@@ -1,79 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Include SEO component -->
+  <!-- Include SEO -->
   <div include-html="components/seo.html"></div>
 
-  <!-- Include Analytics / Google Tag component -->
+  <!-- Include Analytics -->
   <div include-html="components/analytics.html"></div>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Uniden Products | Pixitech</title>
 
-  <!-- Tailwind CSS CDN -->
+  <title>Home Page</title>
+
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            primary: '#ff0000', /* Global red color */
-          },
-          backgroundColor: {
-            dark: '#000000'
-          },
-          textColor: {
-            light: '#ffffff'
+            primary: '#ff0000',
           }
         }
       }
     }
   </script>
 
-  <!-- Optional global styles -->
-  <link rel="stylesheet" href="/assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/global.css">
 </head>
-<body class="bg-dark text-light">
 
-  <!-- Header component -->
+<body class="bg-black text-white">
+
+  <!-- Components -->
   <div include-html="components/header.html"></div>
-
-  <!-- Uniden Hero component -->
   <div include-html="components/pages/uniden/hero.html"></div>
-
-  <!-- Uniden Products component -->
-  <div include-html="components/pages/uniden/products.html"></div>
-
-  <!-- Contact component -->
-  <div include-html="components/pages/uniden/contact.html"></div>
-
-  <!-- Footer component -->
+  <div include-html="components/brands.html"></div>
+  <div include-html="components/pages/uniden/products.html" id="productsComponent"></div>
+  <div include-html="components/contact.html"></div>
   <div include-html="components/footer.html"></div>
 
-  <!-- Script to include HTML components -->
+
+  <!-- Component Loader + Load More Logic -->
   <script>
     async function includeHTML() {
-      const elements = document.querySelectorAll('[include-html]');
+      const elements = document.querySelectorAll("[include-html]");
       for (let el of elements) {
-        const file = el.getAttribute('include-html');
-        if (file) {
-          try {
-            const response = await fetch(file);
-            if (response.ok) {
-              el.innerHTML = await response.text();
-              el.removeAttribute('include-html');
-            } else {
-              el.innerHTML = "Page not found.";
-            }
-          } catch (err) {
-            el.innerHTML = "Error loading page.";
-          }
+        const file = el.getAttribute("include-html");
+        if (!file) continue;
+
+        const response = await fetch(file);
+        const text = await response.text();
+        el.innerHTML = text;
+        el.removeAttribute("include-html");
+
+        // 👇 When products.html is loaded, initialize Load More
+        if (file.includes("products.html")) {
+          requestAnimationFrame(() => {
+            initLoadMore();   // WAIT until DOM updates
+          });
         }
       }
     }
+
+    function initLoadMore() {
+      const items = document.querySelectorAll(".hidden-product");
+      const btn = document.getElementById("loadMore");
+
+      if (!btn || !items.length) return;
+
+      let current = 0;
+      const step = 5;
+
+      // Hide initially
+      items.forEach(i => (i.style.display = "none"));
+
+      btn.addEventListener("click", () => {
+        const slice = Array.from(items).slice(current, current + step);
+        slice.forEach(i => {
+          i.style.display = "block";
+          i.classList.add("opacity-0", "transition", "duration-500");
+          setTimeout(() => i.classList.remove("opacity-0"), 50);
+        });
+        current += step;
+
+        if (current >= items.length) {
+          btn.style.display = "none";
+        }
+      });
+    }
+
     includeHTML();
   </script>
+
 </body>
 </html>
