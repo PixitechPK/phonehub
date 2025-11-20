@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- SEO -->
+  <!-- Include SEO -->
+  <div include-html="components/seo.html"></div>
+
+  <!-- Include Analytics -->
+  <div include-html="components/analytics.html"></div>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Panasonic Products | PhoneHub Pakistan</title>
+  <title>Home Page</title>
 
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -15,68 +20,73 @@
         extend: {
           colors: {
             primary: '#ff0000',
-          },
-          backgroundColor: {
-            dark: '#000000'
-          },
-          textColor: {
-            light: '#ffffff'
           }
         }
       }
     }
   </script>
 
-  <!-- Global CSS -->
-  <link rel="stylesheet" href="/assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/global.css">
 </head>
 
-<body class="bg-dark text-light">
+<body class="bg-black text-white">
 
-  <!-- Inject SEO Component -->
-  <div include-html="/components/seo.html"></div>
+  <!-- Components -->
+  <div include-html="components/header.html"></div>
+  <div include-html="components/hero.html"></div>
+  <div include-html="components/brands.html"></div>
+  <div include-html="components/products.html" id="productsComponent"></div>
+  <div include-html="components/contact.html"></div>
+  <div include-html="components/footer.html"></div>
 
-  <!-- Analytics -->
-  <div include-html="/components/analytics.html"></div>
 
-  <!-- Header -->
-  <div include-html="/components/header.html"></div>
-
-  <!-- Panasonic Hero -->
-  <div include-html="/components/pages/panasonic/hero.html"></div>
-
-  <!-- Panasonic Products -->
-  <div include-html="/components/pages/panasonic/products.html"></div>
-
-  <!-- Contact -->
-  <div include-html="/components/pages/panasonic/contact.html"></div>
-
-  <!-- Footer -->
-  <div include-html="/components/footer.html"></div>
-
-  <!-- Include Components Script -->
+  <!-- Component Loader + Load More Logic -->
   <script>
     async function includeHTML() {
-      const elements = document.querySelectorAll('[include-html]');
-
+      const elements = document.querySelectorAll("[include-html]");
       for (let el of elements) {
-        const file = el.getAttribute('include-html');
+        const file = el.getAttribute("include-html");
+        if (!file) continue;
 
-        try {
-          const response = await fetch(file);
+        const response = await fetch(file);
+        const text = await response.text();
+        el.innerHTML = text;
+        el.removeAttribute("include-html");
 
-          if (response.ok) {
-            const html = await response.text();
-            el.innerHTML = html;
-          } else {
-            el.innerHTML = "<p class='text-red-500'>Component not found.</p>";
-          }
-        } catch (error) {
-          el.innerHTML = "<p class='text-red-500'>Error loading component.</p>";
+        // 👇 When products.html is loaded, initialize Load More
+        if (file.includes("products.html")) {
+          requestAnimationFrame(() => {
+            initLoadMore();   // WAIT until DOM updates
+          });
         }
-
-        el.removeAttribute('include-html');
       }
+    }
+
+    function initLoadMore() {
+      const items = document.querySelectorAll(".hidden-product");
+      const btn = document.getElementById("loadMore");
+
+      if (!btn || !items.length) return;
+
+      let current = 0;
+      const step = 3;
+
+      // Hide initially
+      items.forEach(i => (i.style.display = "none"));
+
+      btn.addEventListener("click", () => {
+        const slice = Array.from(items).slice(current, current + step);
+        slice.forEach(i => {
+          i.style.display = "block";
+          i.classList.add("opacity-0", "transition", "duration-500");
+          setTimeout(() => i.classList.remove("opacity-0"), 50);
+        });
+        current += step;
+
+        if (current >= items.length) {
+          btn.style.display = "none";
+        }
+      });
     }
 
     includeHTML();
