@@ -7,41 +7,24 @@
            alt="Pixitech Logo" class="max-w-[120px]">
     </div>
 
-    <!-- Hamburger Button (Mobile) -->
+    <!-- Hamburger Button -->
     <button id="hamburger" class="md:hidden flex flex-col space-y-1 focus:outline-none">
-      <span class="block w-6 h-0.5 bg-white"></span>
-      <span class="block w-6 h-0.5 bg-white"></span>
-      <span class="block w-6 h-0.5 bg-white"></span>
+      <span class="w-6 h-0.5 bg-white"></span>
+      <span class="w-6 h-0.5 bg-white"></span>
+      <span class="w-6 h-0.5 bg-white"></span>
     </button>
 
-    <!-- Navigation Menu (Desktop) -->
-    <nav class="hidden md:flex flex-row space-x-8 font-semibold text-white relative">
-      
-      <div class="group relative">
-        <a href="#home" class="hover:text-red-600 transition-colors">Home</a>
-        <div class="absolute left-0 mt-2 w-40 bg-black text-white shadow-lg rounded-md opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all">
-          <a href="#home-section1" class="block px-4 py-2 hover:bg-gray-800">Home Section 1</a>
-          <a href="#home-section2" class="block px-4 py-2 hover:bg-gray-800">Home Section 2</a>
-          <a href="#home-section3" class="block px-4 py-2 hover:bg-gray-800">Home Section 3</a>
-        </div>
-      </div>
-
-      <div class="group relative">
-        <a href="#products" class="hover:text-red-600 transition-colors">Products</a>
-        <div class="absolute left-0 mt-2 w-40 bg-black text-white shadow-lg rounded-md opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all">
-          <a href="/panasonic.html" class="block px-4 py-2 hover:bg-gray-800">Panasonic</a>
-          <a href="#uniden" class="block px-4 py-2 hover:bg-gray-800">Uniden</a>
-          <a href="#alcatel" class="block px-4 py-2 hover:bg-gray-800">Alcatel</a>
-        </div>
-      </div>
-
-      <a href="#about" class="hover:text-red-600 transition-colors">About</a>
-      <a href="#contact" class="hover:text-red-600 transition-colors">Contact</a>
+    <!-- Desktop Menu -->
+    <nav class="hidden md:flex space-x-8 font-semibold">
+      <a href="#home" class="hover:text-red-600 transition">Home</a>
+      <a href="#products" class="hover:text-red-600 transition">Products</a>
+      <a href="#about" class="hover:text-red-600 transition">About</a>
+      <a href="#contact" class="hover:text-red-600 transition">Contact</a>
     </nav>
 
-    <!-- Contact / WhatsApp -->
+    <!-- Contact Info -->
     <div class="hidden md:flex flex-col items-end text-right">
-      <span class="font-semibold text-white">+92 345 3799494</span>
+      <span class="font-semibold">+92 345 3799494</span>
       <small class="text-gray-400 text-xs mt-1">Connect on WhatsApp</small>
     </div>
 
@@ -61,7 +44,12 @@
   const mobileMenu = document.getElementById('mobile-menu');
 
   hamburger.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-    mobileMenu.classList.toggle('block');
+    if (mobileMenu.classList.contains('hidden')) {
+      mobileMenu.classList.remove('hidden');
+      mobileMenu.classList.add('flex', 'flex-col');
+    } else {
+      mobileMenu.classList.add('hidden');
+      mobileMenu.classList.remove('flex', 'flex-col');
+    }
   });
 </script>
