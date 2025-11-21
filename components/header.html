@@ -7,13 +7,19 @@
            alt="Pixitech Logo" class="max-w-[120px]">
     </div>
 
+    <!-- Hamburger Button (Mobile) -->
+    <button id="hamburger" class="md:hidden flex flex-col space-y-1 focus:outline-none">
+      <span class="block w-6 h-0.5 bg-white"></span>
+      <span class="block w-6 h-0.5 bg-white"></span>
+      <span class="block w-6 h-0.5 bg-white"></span>
+    </button>
+
     <!-- Navigation Menu -->
-    <nav class="flex space-x-8 font-semibold text-white relative">
+    <nav id="nav-menu" class="hidden md:flex flex-col md:flex-row md:space-x-8 font-semibold text-white relative">
       
       <!-- Home -->
       <div class="group relative">
-        <a href="#home" class="hover:text-primary transition-colors">Home</a>
-        <!-- Example submenu (hidden by default) -->
+        <a href="#home" class="hover:text-red-600 transition-colors">Home</a>
         <div class="absolute left-0 mt-2 w-40 bg-black text-white shadow-lg rounded-md opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all">
           <a href="#home-section1" class="block px-4 py-2 hover:bg-gray-800">Home Section 1</a>
           <a href="#home-section2" class="block px-4 py-2 hover:bg-gray-800">Home Section 2</a>
@@ -23,7 +29,7 @@
 
       <!-- Products -->
       <div class="group relative">
-        <a href="#products" class="hover:text-primary transition-colors">Products</a>
+        <a href="#products" class="hover:text-red-600 transition-colors">Products</a>
         <div class="absolute left-0 mt-2 w-40 bg-black text-white shadow-lg rounded-md opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all">
           <a href="/panasonic.html" class="block px-4 py-2 hover:bg-gray-800">Panasonic</a>
           <a href="#uniden" class="block px-4 py-2 hover:bg-gray-800">Uniden</a>
@@ -32,18 +38,34 @@
       </div>
 
       <!-- About -->
-      <a href="#about" class="hover:text-primary transition-colors">About</a>
+      <a href="#about" class="hover:text-red-600 transition-colors">About</a>
 
       <!-- Contact -->
-      <a href="#contact" class="hover:text-primary transition-colors">Contact</a>
+      <a href="#contact" class="hover:text-red-600 transition-colors">Contact</a>
     </nav>
 
     <!-- Contact / WhatsApp -->
-    <div class="flex flex-col items-end text-right">
+    <div class="flex flex-col items-end text-right hidden md:flex">
       <span class="font-semibold text-white">+92 345 3799494</span>
       <small class="text-gray-400 text-xs mt-1">Connect on WhatsApp</small>
     </div>
 
   </div>
+
+  <!-- Mobile Navigation Overlay -->
+  <div id="mobile-menu" class="md:hidden hidden bg-black text-white px-6 py-4">
+    <a href="#home" class="block py-2 border-b border-gray-700">Home</a>
+    <a href="#products" class="block py-2 border-b border-gray-700">Products</a>
+    <a href="#about" class="block py-2 border-b border-gray-700">About</a>
+    <a href="#contact" class="block py-2">Contact</a>
+  </div>
 </header>
 
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+</script>
