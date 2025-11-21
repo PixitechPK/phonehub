@@ -1,97 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Include SEO -->
-  <div include-html="components/seo.html"></div>
-
-  <!-- Include Analytics -->
-  <div include-html="components/analytics.html"></div>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Home Page</title>
+  <title>Uniden Telephones Pakistan | Official Store for Cordless Phones</title>
+  <meta name="description" content="Buy official Uniden, Panasonic, Alcatel, Kocom, Commax, and Polycom telephones and intercoms across Pakistan. Explore cordless, video door phones, conference phones, PABX, and consoles with Pixitech.">
+  <meta name="keywords" content="Uniden, Panasonic, Alcatel, Kocom, Commax, Polycom, Telephones Pakistan, Cordless Phones, Intercom, Video Door Phones, Conference Phones, PABX, Pixitech">
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#ff0000',
-          }
-        }
-      }
-    }
-  </script>
-
-  <link rel="stylesheet" href="assets/css/global.css">
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
+<body class="font-sans text-gray-200 bg-gray-900">
 
-<body class="bg-black text-white">
+  <!-- Analytics -->
+  <div include-html="components/analytics.html"></div>
 
-  <!-- Components -->
+  <!-- Page Sections -->
   <div include-html="components/header.html"></div>
   <div include-html="components/hero.html"></div>
+  <div include-html="components/about.html"></div>
+  <div include-html="components/products.html"></div>
+  <div include-html="components/online-orders.html"></div>
   <div include-html="components/brands.html"></div>
-  <div include-html="components/products.html" id="productsComponent"></div>
   <div include-html="components/contact.html"></div>
   <div include-html="components/footer.html"></div>
 
-
-  <!-- Component Loader + Load More Logic -->
+  <!-- Include HTML Script -->
   <script>
-    async function includeHTML() {
-      const elements = document.querySelectorAll("[include-html]");
-      for (let el of elements) {
-        const file = el.getAttribute("include-html");
-        if (!file) continue;
-
-        const response = await fetch(file);
-        const text = await response.text();
-        el.innerHTML = text;
-        el.removeAttribute("include-html");
-
-        // 👇 When products.html is loaded, initialize Load More
-        if (file.includes("products.html")) {
-          requestAnimationFrame(() => {
-            initLoadMore();   // WAIT until DOM updates
-          });
+    async function loadComponents() {
+      const elements = document.querySelectorAll('[include-html]');
+      for (const el of elements) {
+        const url = el.getAttribute('include-html');
+        try {
+          const res = await fetch(url);
+          const html = await res.text();
+          el.innerHTML = html;
+        } catch (err) {
+          console.error('Include failed:', err);
         }
       }
     }
 
-    function initLoadMore() {
-      const items = document.querySelectorAll(".hidden-product");
-      const btn = document.getElementById("loadMore");
+    window.addEventListener('DOMContentLoaded', () => {
+      loadComponents().then(() => {
+        // Hamburger Menu Script (runs after header is loaded)
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
 
-      if (!btn || !items.length) return;
-
-      let current = 0;
-      const step = 5;
-
-      // Hide initially
-      items.forEach(i => (i.style.display = "none"));
-
-      btn.addEventListener("click", () => {
-        const slice = Array.from(items).slice(current, current + step);
-        slice.forEach(i => {
-          i.style.display = "block";
-          i.classList.add("opacity-0", "transition", "duration-500");
-          setTimeout(() => i.classList.remove("opacity-0"), 50);
-        });
-        current += step;
-
-        if (current >= items.length) {
-          btn.style.display = "none";
+        if (hamburger && mobileMenu) {
+          hamburger.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+          });
         }
       });
-    }
-
-    includeHTML();
+    });
   </script>
 
 </body>
 </html>
-
